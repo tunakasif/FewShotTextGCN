@@ -1,0 +1,11 @@
+numpy==1.19
+pytorch-lightning==1.5.1
+configargparse==1.5.3
+nltk==3.6.5
+scikit-learn==1.0.1
+fugashi==1.1.1
+jieba==0.42.1
+mlflow==1.21.0
+matplotlib
+pytorch-metric-learning==1.0.0
+protobuf==3.20
