@@ -23,6 +23,7 @@ jieba = "0.42.1"
 mlflow = "1.21.0"
 pytorch-metric-learning = "1.0.0"
 protobuf = "3.20"
+matplotlib = "^3.6"
 
 
 
