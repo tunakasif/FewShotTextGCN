@@ -1,3 +1,9 @@
+#
+data/original-data
+runs/
+experiments/
+processed_data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
