@@ -9,6 +9,7 @@ from pytorch_lightning.callbacks import (
     LearningRateMonitor,
 )
 from pytorch_lightning.loggers import TensorBoardLogger, MLFlowLogger
+
 # import mlflow.pytorch
 # from mlflow.tracking.context import registry as context_registry
 # from mlflow.utils.mlflow_tags import MLFLOW_RUN_NAME
@@ -22,7 +23,9 @@ from preprocess_data import TextPreprocessor
 from BBPE.bbpe_tokenizer import BBPETokenizer
 from dataloader import TextGCNDataset, GraphSageTextDataset, CoraDataModule
 from dataloader_transformers import TransformersTextClassDatamodule
-from models import LitTextGNN, LitSage, CustomDocGraphGNN, SimpleTextGCN
+
+# from models import LitTextGNN, LitSage, CustomDocGraphGNN, SimpleTextGCN
+from models import LitTextGNN, CustomDocGraphGNN
 from models_transformers import LitTransformer
 
 # logging.config.fileConfig('logging.config')  # TODO: stream logs to file?
@@ -59,20 +62,20 @@ if __name__ == "__main__":
         model_type = LitTextGNN
         dataset_type = TextGCNDataset
         use_word_word_edges = True
-    elif args.model_type.lower() == "graphsage":
-        model_type = LitSage
-        dataset_type = GraphSageTextDataset
-        use_word_word_edges = True
+    # elif args.model_type.lower() == "graphsage":
+    #     model_type = LitSage
+    #     dataset_type = GraphSageTextDataset
+    #     use_word_word_edges = True
     elif args.model_type.lower() == "custom":
         model_type = CustomDocGraphGNN
         dataset_type = TextGCNDataset
         use_word_word_edges = False  # args.use_unsup_loss #
         # use_word_word_edges = True #args.use_unsup_loss #
-    elif args.model_type.lower() == "simple":
-        model_type = SimpleTextGCN
-        dataset_type = TextGCNDataset
-        use_word_word_edges = False
-    elif args.model_type.lower() == 'transformer':
+    # elif args.model_type.lower() == "simple":
+    #     model_type = SimpleTextGCN
+    #     dataset_type = TextGCNDataset
+    #     use_word_word_edges = False
+    elif args.model_type.lower() == "transformer":
         model_type = LitTransformer
         dataset_type = TransformersTextClassDatamodule
         use_word_word_edges = None
