@@ -196,13 +196,14 @@ if __name__ == "__main__":
 
     experiment_name = deepcopy(args.experiment_name)
     for seed in range(args.num_seeds):
+        curr_seed = 42 + seed
         torch.cuda.empty_cache()
 
         wait_time = 15
         logger.warning(f"Waiting for {wait_time} seconds")
         time.sleep(wait_time)
         args.experiment_name = os.path.join(
-            EXPERIMENTS_BASE_FOLDER, f"{experiment_name}_seed_{42+seed}"
+            EXPERIMENTS_BASE_FOLDER, f"{experiment_name}_seed_{curr_seed}"
         )
 
         model = model_type(
@@ -220,7 +221,7 @@ if __name__ == "__main__":
         # Train and eval
         ##################################################################
 
-        pl.seed_everything(42 + seed)
+        pl.seed_everything(curr_seed)
 
         # Create a PyTorch Lightning trainer with the generation callback
         root_dir = args.experiment_name
