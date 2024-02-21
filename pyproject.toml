@@ -7,11 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.9"
+setuptools = "59.5.0"
 torch = { url = "https://download.pytorch.org/whl/cu102/torch-1.9.1%2Bcu102-cp38-cp38-linux_x86_64.whl" }
 torchvision = { url = "https://download.pytorch.org/whl/cu102/torchvision-0.10.1%2Bcu102-cp38-cp38-linux_x86_64.whl" }
 torchaudio = { url = "https://download.pytorch.org/whl/torchaudio-0.9.1-cp38-cp38-linux_x86_64.whl" }
 torch-sparse = { url = "https://data.pyg.org/whl/torch-1.9.0%2Bcu102/torch_sparse-0.6.12-cp38-cp38-linux_x86_64.whl" }
 torch-scatter = { url = "https://data.pyg.org/whl/torch-1.9.0%2Bcu102/torch_scatter-2.0.9-cp38-cp38-linux_x86_64.whl" }
+torch-cluster = { url = "https://data.pyg.org/whl/torch-1.9.0%2Bcu102/torch_cluster-1.5.9-cp38-cp38-linux_x86_64.whl" }
 torch-geometric = "^2.5.0"
 numpy = "1.19"
 pytorch-lightning = "1.5.1"
@@ -24,6 +26,8 @@ mlflow = "1.21.0"
 pytorch-metric-learning = "1.0.0"
 protobuf = "3.20"
 matplotlib = "^3.6"
+sentencepiece = "^0.2.0"
+transformers = {extras = ["sentencepiece"], version = "^4.37.2"}
 
 
 
