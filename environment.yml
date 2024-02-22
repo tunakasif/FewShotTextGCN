@@ -1,0 +1,29 @@
+name: fewshot
+channels:
+  - huggingface
+  - pytorch
+  - pyg
+  - nvidia
+  - nrtrmp
+  - conda-forge
+  - defaults
+dependencies:
+  - python >=3.8.0,<3.9
+  - setuptools=59.5.0
+  - pytorch=1.9.1
+  - pytorch-cuda=11.6
+  - torchvision=0.10.1
+  - torchaudio=0.9.1
+  - pyg=2.0.1
+  - pytorch-lightning=1.5.1
+  - pytorch-metric-learning=1.6.3
+  - numpy=1.19
+  - configargparse=1.5.3
+  - nltk=3.6.5
+  - scikit-learn=1.0.1
+  - jieba=0.42.1
+  - mlflow=1.21.0
+  - protobuf=3.20
+  - matplotlib=3.6
+  - sentencepiece=0.1.99
+  - transformers
