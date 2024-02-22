@@ -228,8 +228,6 @@ if __name__ == "__main__":
             num_subwords=args.num_subwords,
         )
 
-
-
         ##################################################################
         # Train and eval
         ##################################################################
@@ -258,9 +256,7 @@ if __name__ == "__main__":
         lr_logger = LearningRateMonitor()
 
         # Initiate loggers
-        tb_logger = TensorBoardLogger(
-            save_dir="runs", version=1, name=args.experiment_name
-        )
+        tb_logger = TensorBoardLogger(save_dir="runs", version=1, name=args.experiment_name)
 
         callbacks = [lr_logger, early_stopping, checkpoint_callback]
 
@@ -284,7 +280,10 @@ if __name__ == "__main__":
 
         # Test best model on the test set
         test_result = trainer.test(
-            model, datamodule=datamodule,  verbose=False, ckpt_path="best" #test_dataloaders=datamodule,
+            model,
+            datamodule=datamodule,
+            verbose=False,
+            ckpt_path="best",  # test_dataloaders=datamodule,
         )
         logger.info(f"Test result {test_result}")
         print(test_result)
