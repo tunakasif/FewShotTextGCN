@@ -54,6 +54,15 @@ if __name__ == "__main__":
 
     # Main args
     args, parser = get_args()
+    acc_logger = logging.getLogger("accuracy_logger")
+    acc_logger.setLevel(logging.INFO)
+    acc_file_handler = logging.FileHandler(f"{args.experiment_name}-accuracy.log")
+    formatter = logging.Formatter(
+        "%(asctime)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d,%H:%M:%S",
+    )
+    acc_file_handler.setFormatter(formatter)
+    acc_logger.addHandler(acc_file_handler)
 
     # Text preprocessing args
     parser = TextPreprocessor.add_argparse_args(parser)
@@ -279,5 +288,8 @@ if __name__ == "__main__":
         )
         logger.info(f"Test result {test_result}")
         print(test_result)
+        acc_logger.info(
+            f"seed: {curr_seed}, train split: {1 - args.percentage_dev:>6.2%}, test acc: {test_result[0]['test_acc']:>9.5%}"
+        )
 
         del trainer, model
