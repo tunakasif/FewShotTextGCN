@@ -28,6 +28,10 @@ from dataloader_transformers import TransformersTextClassDatamodule
 from models import LitTextGNN, CustomDocGraphGNN
 from models_transformers import LitTransformer
 
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
 # logging.config.fileConfig('logging.config')  # TODO: stream logs to file?
 logger = logging.getLogger(__name__)
 
