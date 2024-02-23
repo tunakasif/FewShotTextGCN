@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Check if exactly one argument is provided
 if [ "$#" -ne 1 ]; then
 	echo "Usage: $0 {r8|r52|mr|ohsumed|20ng|cola|sst2}"
