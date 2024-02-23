@@ -1,12 +1,12 @@
 # Check if exactly one argument is provided
 if [ "$#" -ne 1 ]; then
-	echo "Usage: $0 {r8|r52|mr|ohsumed|20ng}"
+	echo "Usage: $0 {r8|r52|mr|ohsumed|20ng|cola|sst2}"
 	exit 1
 fi
 
 # Check if the provided argument is one of the pre-defined values
 case "$1" in
-r8 | r52 | mr | ohsumed | 20ng)
+r8 | r52 | mr | ohsumed | 20ng | cola | sst2)
 	echo "Valid argument: $1"
 	dataset=$1
 	dev_splits=(0.01 0.80 0.90 0.95 0.99)
@@ -15,7 +15,7 @@ r8 | r52 | mr | ohsumed | 20ng)
 	done
 	;;
 *)
-	echo "Invalid argument: $1. Please provide one of the following values: r8, r52, mr, ohsumed, 20ng."
+	echo "Invalid argument: $1. Please provide one of the following values: r8, r52, mr, ohsumed, 20ng, cola, sst2."
 	exit 1
 	;;
 esac
