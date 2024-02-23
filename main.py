@@ -270,7 +270,7 @@ if __name__ == "__main__":
             resume_from_checkpoint=args.pretrained_model,
             auto_lr_find=args.lr == "auto",
             benchmark=True,  # https://discuss.pytorch.org/t/what-does-torch-backends-cudnn-benchmark-do/5936
-            # deterministic=True
+            deterministic=True
             # profiler="advanced"
         )
 
