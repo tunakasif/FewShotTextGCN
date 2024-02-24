@@ -29,6 +29,7 @@ from pytorch_metric_learning.losses import TripletMarginLoss
 from pytorch_metric_learning.distances import CosineSimilarity
 
 from optimizers.ranger21 import Ranger21
+from sklearn.metrics import matthews_corrcoef
 
 # From: https://raw.githubusercontent.com/codeKgu/Text-GCN/master/model_text_gnn.py
 EPS = 1e-15
@@ -51,7 +52,11 @@ class UnsupGNN(pl.LightningModule, abc.ABC):
     ):
         super().__init__()
         self.save_hyperparameters(args)
-
+        self.calc_mcc = args.calc_mcc
+        if self.calc_mcc:
+            print("Using MCC")
+        self.args = args
+        self.num_labels = num_labels
         self.num_features = num_features
         self.hidden_dim = args.hidden_dim
         self.num_layers = args.num_layers
@@ -63,6 +68,7 @@ class UnsupGNN(pl.LightningModule, abc.ABC):
             args.use_bbpe
         )  # Add a module to the model that takes in subwords and aggregates to word
         self.subword_aggregator_type = args.subword_aggregator_type
+        self.class_weights = class_weights
         self.num_subwords = num_subwords
         self.num_doc_nodes = num_doc_nodes
 
@@ -229,6 +235,9 @@ class UnsupGNN(pl.LightningModule, abc.ABC):
         )
 
         loss = self.loss(y_pred[mask], batch.y[mask])
+        if self.calc_mcc:
+            mcc = matthews_corrcoef(y_pred=y_pred[mask].argmax(dim=-1), y_true=batch.y[mask])
+            return loss, mcc, emb
         acc = (y_pred[mask].argmax(dim=-1) == batch.y[mask]).float().mean()
         return loss, acc, emb
 
@@ -404,6 +413,12 @@ class UnsupGNN(pl.LightningModule, abc.ABC):
             type=float,
             help="q value from Node2Vec paper",
         )
+        parser.add_argument(
+            "--calc_mcc",
+            default=False,
+            type=bool,
+            help="Calculate Matthews correlation instead of accuracy",
+        )
 
         return parent_parser
 
@@ -521,6 +536,8 @@ class CustomDocGraphGNN(UnsupGNN):
         y_pred, y_true = y_pred[mask], y_true[mask]
         # Compute accuracy on all nodes
         acc = (y_pred.argmax(dim=-1) == y_true).float().mean()
+        if self.calc_mcc:
+            mcc = matthews_corrcoef(y_pred=y_pred.argmax(dim=-1), y_true=y_true)
 
         # Filter out very certain preds using TSA and compute loss on remaining nodes
         if self.use_unsup_loss and mode == "train":
@@ -533,6 +550,9 @@ class CustomDocGraphGNN(UnsupGNN):
 
         # Add self-training loss
         loss += pseudo_label_loss
+
+        if self.calc_mcc:
+            acc = mcc
 
         if mode == "test":
             return (y_pred.argmax(dim=-1) == y_true), acc, emb
