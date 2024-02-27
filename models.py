@@ -581,8 +581,8 @@ class CustomDocGraphGNN(UnsupGNN):
     def validation_step(self, batch, batch_idx):
         loss, acc, emb = self.forward(batch, mode="val")
 
-        self.log("val_acc", acc)
-        self.log("val_loss", loss)
+        self.log("val_acc", acc, prog_bar=True)
+        self.log("val_loss", loss, prog_bar=True)
 
     def test_step(self, batch, batch_idx):
         predictions_correct_or_not, acc, _ = self.forward(batch, mode="test")
