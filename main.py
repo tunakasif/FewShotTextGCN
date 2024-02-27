@@ -248,8 +248,8 @@ if __name__ == "__main__":
             dirpath=model_save_dir,
             save_top_k=1,
             verbose=False,
-            monitor="val_loss",  # TODO: Accuracy instead?
-            mode="min",
+            monitor="val_acc",  # TODO: Accuracy instead?
+            mode="max",
             # auto_insert_metric_name=True
             # prefix="",
         )
