@@ -270,13 +270,24 @@ if __name__ == "__main__":
             resume_from_checkpoint=args.pretrained_model,
             auto_lr_find=args.lr == "auto",
             benchmark=True,  # https://discuss.pytorch.org/t/what-does-torch-backends-cudnn-benchmark-do/5936
-            deterministic=True
+            deterministic=True,
             # profiler="advanced"
         )
 
         # Start the actual training
         # with mlflow.start_run() as run:
         trainer.fit(model, datamodule)
+        validation_result = trainer.validate(
+            model,
+            datamodule=datamodule,
+            verbose=False,
+            ckpt_path="best",  # test_dataloaders=datamodule,
+        )
+        logger.info(f"Validation result {validation_result}")
+        print(validation_result)
+        acc_logger.info(
+            f"seed: {curr_seed}, train split: {1 - args.percentage_dev:>6.2%}, val  acc: {validation_result[0]['val_acc']:>9.5%}"
+        )
 
         # Test best model on the test set
         test_result = trainer.test(
